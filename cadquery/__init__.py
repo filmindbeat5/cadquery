@@ -1,80 +1,105 @@
-from importlib.metadata import version, PackageNotFoundError
+"""CadQuery - A parametric 3D CAD scripting framework.
 
-try:
-    __version__ = version("cadquery")
-except PackageNotFoundError:
-    # package is not installed
-    __version__ = "2.8.0dev"
+CadQuery is an intuitive, easy-to-use Python module for building parametric
+3D CAD models. It uses OpenCASCADE Technology (OCCT) as its underlying
+geometry kernel.
 
-# these items point to the OCC implementation
-from .occ_impl.geom import Plane, BoundBox, Vector, Matrix, Location
+Example usage::
+
+    import cadquery as cq
+
+    result = cq.Workplane("XY").box(1, 2, 3)
+    cq.exporters.export(result, "box.step")
+"""
+
+from .cq import (
+    CQContext,
+    CQObject,
+    Workplane,
+)
+from .occ_impl.geom import (
+    Vector,
+    Matrix,
+    Plane,
+    Location,
+)
 from .occ_impl.shapes import (
     Shape,
     Vertex,
     Edge,
-    Face,
     Wire,
-    Solid,
+    Face,
     Shell,
+    Solid,
     Compound,
-    sortWiresByBuildOrder,
 )
-from .occ_impl import exporters
-from .occ_impl import importers
-
-# these items are the common implementation
-
-# the order of these matter
+from .occ_impl.assembly import (
+    Assembly,
+    Constraint,
+)
 from .selectors import (
+    Selector,
     NearestToPointSelector,
     ParallelDirSelector,
     DirectionSelector,
     PerpendicularDirSelector,
     TypeSelector,
     DirectionMinMaxSelector,
+    RadiusNthSelector,
+    CenterNthSelector,
+    DirectionNthSelector,
+    LengthNthSelector,
+    AreaNthSelector,
     StringSyntaxSelector,
-    Selector,
 )
-from .sketch import Sketch
-from .cq import CQ, Workplane
-from .assembly import Assembly, Color, Constraint, Material
-from . import selectors
-from . import plugins
+from . import exporters
+from . import importers
+from .cq_types import Real, VectorLike
 
+__version__ = "2.4.0"
 
 __all__ = [
-    "CQ",
+    # Core classes
     "Workplane",
-    "Assembly",
-    "Color",
-    "Constraint",
-    "Material",
-    "plugins",
-    "selectors",
-    "Plane",
-    "BoundBox",
-    "Matrix",
+    "CQContext",
+    "CQObject",
+    # Geometry
     "Vector",
+    "Matrix",
+    "Plane",
     "Location",
-    "sortWiresByBuildOrder",
+    # Shapes
     "Shape",
     "Vertex",
     "Edge",
     "Wire",
     "Face",
-    "Solid",
     "Shell",
+    "Solid",
     "Compound",
-    "exporters",
-    "importers",
+    # Assembly
+    "Assembly",
+    "Constraint",
+    # Selectors
+    "Selector",
     "NearestToPointSelector",
     "ParallelDirSelector",
     "DirectionSelector",
     "PerpendicularDirSelector",
     "TypeSelector",
     "DirectionMinMaxSelector",
+    "RadiusNthSelector",
+    "CenterNthSelector",
+    "DirectionNthSelector",
+    "LengthNthSelector",
+    "AreaNthSelector",
     "StringSyntaxSelector",
-    "Selector",
-    "plugins",
-    "Sketch",
+    # Modules
+    "exporters",
+    "importers",
+    # Types
+    "Real",
+    "VectorLike",
+    # Version
+    "__version__",
 ]
