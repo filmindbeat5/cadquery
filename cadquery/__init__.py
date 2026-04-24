@@ -10,6 +10,9 @@ Example usage::
 
     result = cq.Workplane("XY").box(1, 2, 3)
     cq.exporters.export(result, "box.step")
+
+Note: This is a personal fork. See https://github.com/CadQuery/cadquery
+for the upstream project.
 """
 
 from .cq import (
