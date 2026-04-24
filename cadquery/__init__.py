@@ -18,6 +18,8 @@ Personal notes:
     - Primarily using this for hobby CNC and 3D printing projects.
     - Workplane("XY") is the most common starting point for flat parts.
     - Remember: exporters.export supports STEP, STL, SVG, DXF formats.
+    - For 3D printing, STL export with tolerance=0.01 gives good results.
+    - Use Assembly for multi-part models with constraints.
 """
 
 from .cq import (
@@ -66,6 +68,10 @@ from .cq_types import Real, VectorLike
 
 __version__ = "2.4.0"
 
+# Default tolerance used for STL exports in my projects (good balance of
+# quality vs. file size for FDM 3D printing).
+DEFAULT_STL_TOLERANCE = 0.01
+
 __all__ = [
     # Core classes
     "Workplane",
@@ -110,4 +116,6 @@ __all__ = [
     "VectorLike",
     # Version
     "__version__",
+    # Personal defaults
+    "DEFAULT_STL_TOLERANCE",
 ]
