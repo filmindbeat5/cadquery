@@ -13,6 +13,11 @@ Example usage::
 
 Note: This is a personal fork. See https://github.com/CadQuery/cadquery
 for the upstream project.
+
+Personal notes:
+    - Primarily using this for hobby CNC and 3D printing projects.
+    - Workplane("XY") is the most common starting point for flat parts.
+    - Remember: exporters.export supports STEP, STL, SVG, DXF formats.
 """
 
 from .cq import (
