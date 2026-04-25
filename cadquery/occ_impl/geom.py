@@ -74,7 +74,13 @@ class Vector:
         return self._v.Magnitude()
 
     def normalized(self) -> "Vector":
-        """Return a unit vector in the same direction."""
+        """Return a unit vector in the same direction.
+
+        Raises ValueError if the vector has zero length to avoid silent
+        NaN propagation from OCC's Normalized() on a zero vector.
+        """
+        if self._v.Magnitude() == 0.0:
+            raise ValueError("Cannot normalize a zero-length vector")
         return Vector(self._v.Normalized())
 
     def dot(self, other: "Vector") -> float:
@@ -97,8 +103,4 @@ class Vector:
         """Return this vector scaled by a scalar."""
         return Vector(self._v.Multiplied(scale))
 
-    def getAngle(self, other: "Vector") -> float:  # noqa: N802
-        """Return the angle in radians between this vector and another."""
-        return self._v.Angle(other._v)
-
-    def toTuple(self) -> Tuple[float, float, float]:  # noqa: N
+    def getAngle(self, other: "Vector"
