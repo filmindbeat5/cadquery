@@ -20,6 +20,7 @@ Personal notes:
     - Remember: exporters.export supports STEP, STL, SVG, DXF formats.
     - For 3D printing, STL export with tolerance=0.01 gives good results.
     - Use Assembly for multi-part models with constraints.
+    - DEFAULT_SVG_OPTS: handy defaults for SVG export (laser cutting).
 """
 
 from .cq import (
@@ -72,6 +73,14 @@ __version__ = "2.4.0"
 # quality vs. file size for FDM 3D printing).
 DEFAULT_STL_TOLERANCE = 0.01
 
+# Default SVG export options for laser cutting projects.
+# projectionDir points straight down so the top face is shown.
+DEFAULT_SVG_OPTS = {
+    "projectionDir": (0, 0, -1),
+    "showAxes": False,
+    "strokeWidth": 0.25,
+}
+
 __all__ = [
     # Core classes
     "Workplane",
@@ -118,4 +127,5 @@ __all__ = [
     "__version__",
     # Personal defaults
     "DEFAULT_STL_TOLERANCE",
+    "DEFAULT_SVG_OPTS",
 ]
