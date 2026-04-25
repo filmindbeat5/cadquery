@@ -35,6 +35,7 @@ class Vector:
             - Vector(gp_Vec)
             - Vector(gp_Pnt)
             - Vector(gp_Dir)
+            - Vector(gp_XYZ)
         """
         if len(args) == 3:
             self._v = gp_Vec(*[float(a) for a in args])
@@ -47,6 +48,9 @@ class Vector:
             elif isinstance(arg, gp_Pnt):
                 self._v = gp_Vec(arg.X(), arg.Y(), arg.Z())
             elif isinstance(arg, gp_Dir):
+                self._v = gp_Vec(arg.X(), arg.Y(), arg.Z())
+            elif isinstance(arg, gp_XYZ):
+                # gp_XYZ is a common OCC type; handy to support directly
                 self._v = gp_Vec(arg.X(), arg.Y(), arg.Z())
             else:
                 raise TypeError(f"Cannot create Vector from {type(arg)}")
@@ -97,37 +101,4 @@ class Vector:
         """Return the angle in radians between this vector and another."""
         return self._v.Angle(other._v)
 
-    def toTuple(self) -> Tuple[float, float, float]:  # noqa: N802
-        """Return the vector as a (x, y, z) tuple."""
-        return (self.x, self.y, self.z)
-
-    def toPnt(self) -> gp_Pnt:  # noqa: N802
-        """Convert to an OCC gp_Pnt."""
-        return gp_Pnt(self.x, self.y, self.z)
-
-    def toDir(self) -> gp_Dir:  # noqa: N802
-        """Convert to an OCC gp_Dir (unit direction)."""
-        return gp_Dir(self._v)
-
-    def __add__(self, other: "Vector") -> "Vector":
-        return self.add(other)
-
-    def __sub__(self, other: "Vector") -> "Vector":
-        return self.sub(other)
-
-    def __mul__(self, scale: float) -> "Vector":
-        return self.multiply(scale)
-
-    def __rmul__(self, scale: float) -> "Vector":
-        return self.multiply(scale)
-
-    def __neg__(self) -> "Vector":
-        return Vector(self._v.Reversed())
-
-    def __repr__(self) -> str:
-        return f"Vector({self.x:.4f}, {self.y:.4f}, {self.z:.4f})"
-
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Vector):
-            return NotImplemented
-        return self._v.IsEqual(other._v, 1e-9, 1e-9)
+    def toTuple(self) -> Tuple[float, float, float]:  # noqa: N
